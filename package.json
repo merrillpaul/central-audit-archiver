@@ -1,0 +1,21 @@
+{
+  "name": "central-audit-archiver",
+  "version": "1.0.0",
+  "description": "## Build",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rimraf lib && rimraf coverage && ./gradlew clean",
+    "build": "./gradlew build",
+    "deploy": "npm run clean && npm run build && ./deploy_serverless",
+    "preclean": "npm i",
+    "prebuild": "npm i",
+    "predeploy": "npm i"
+  },
+  "author": "",
+  "devDependencies": {
+    "rimraf": "^2.0.0",
+    "serverless": "^1.32.0",
+    "serverless-offline": "^3.27.0"
+  }
+}

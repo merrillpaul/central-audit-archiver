@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [ -z "$1" ]; then 
+    STAGE='qa'
+else 
+    STAGE=$1
+fi
+echo "Stage: $STAGE"
+SLS_DEBUG=* serverless deploy --stage $STAGE
+
+

@@ -1,0 +1,33 @@
+service: qi-central-audit-archiver
+
+frameworkVersion: ">=1.2.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: java8
+  region: ${opt:region, self:custom.defaultRegion}
+  environment: ${file(./src/config/env.yml):${opt:stage, self:custom.defaults.stage}}
+  iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:*
+          - "ssm:GetParameters"
+        Resource: "*"
+custom:
+  defaultRegion: us-east-2
+  stage: ${opt:stage}
+  defaults:
+    stage: qa
+
+plugins:
+ - serverless-offline
+ 
+package:
+  artifact: build/distributions/central-audit-archiver.zip
+
+functions:
+  archiveAudit:
+    handler: com.pearson.central.audit.ArchiveAudit
+    events:
+      - schedule:
+          rate: rate(60 minutes)
